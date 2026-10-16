@@ -4,3 +4,6 @@ Crea en la raíz del proyecto un AGENTS.md con estas reglas:
 2. Memoria entre sesiones: al empezar la sesión, leer CONTEXTO.md; al terminar
    una tarea o cuando el usuario se despida, actualizarlo con lo hecho, lo
    pendiente y las decisiones/dudas. Mantenerlo breve.
+
+Crea también CONTEXTO.md con las secciones: Estado actual, Hecho, Pendiente,
+Decisiones y dudas, Última actualización.
