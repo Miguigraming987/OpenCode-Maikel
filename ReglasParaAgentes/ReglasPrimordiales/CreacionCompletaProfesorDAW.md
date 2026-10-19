@@ -25,6 +25,7 @@ Pasos exactos para tener el profesor (y las reglas del agente) en cualquier proy
 7. **Comprueba:** la respuesta empieza con "Miguelito" y `Comandos` muestra la tabla.
 
 **Luego ve a [`VM-PASOS.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/VM-PASOS.md)** (repo `ayuda-agentes`) si necesitas más detalle de la VM, las carpetas compartidas o las memorias. Todos los comandos disponibles están en [`Comandos.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/Comandos.md).
+
 ## Camino manual (sin instalador)
 
 1. Crea la carpeta del proyecto y abre OpenCode en ella.
