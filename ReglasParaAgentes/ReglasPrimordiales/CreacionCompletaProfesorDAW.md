@@ -2,26 +2,29 @@
 
 Pasos exactos para tener el profesor (y las reglas del agente) en cualquier proyecto. Hay un camino rápido y uno manual.
 
-## Camino rápido (Windows 11, PC o VM)
+## Camino rápido (Windows 11, PC o VM de VirtualBox)
 
-1. **Instala OpenCode** (PowerShell, una sola vez):
+0. **Solo en la VM:** comprueba en el Explorador que aparecen `Z:` (proyectos) e `Y:` (agentes y memorias). Si no aparecen, instala las Guest Additions: menú de la VM > Dispositivos > Insertar imagen de CD de las Guest Additions, ejecuta `VBoxWindowsAdditions.exe` y reinicia. En la VM no uses `E:`.
+1. **Instala los programas** (PowerShell, una sola vez):
    ```powershell
    winget install OpenJS.NodeJS.LTS; winget install Git.Git; winget install GitHub.cli
    ```
-   Cierra y abre PowerShell, y luego:
+   Cierra y abre PowerShell.
+2. **Instala OpenCode y vincula GitHub** (`gh auth login` es interactivo):
    ```powershell
-   npm install -g @opencode/cli; gh auth login
+   npm install -g @opencode/cli; gh auth login; git config --global user.name "Miguigraming987"; git config --global user.email "186576905+Miguigraming987@users.noreply.github.com"
    ```
-   Escribe `opencode` y, dentro, `/connect` para conectar tu proveedor de IA.
-2. **Instala mis reglas y el profesor** (una sola vez por PC o VM):
+3. Escribe `opencode` y, dentro, `/connect` para conectar tu proveedor de IA.
+4. **Instala mis reglas y el profesor** (una sola vez por PC o VM):
    ```powershell
    irm https://raw.githubusercontent.com/Miguigraming987/ayuda-agentes/main/instalar.ps1 | iex
    ```
-3. **En cada proyecto nuevo:** abre OpenCode en su carpeta y escribe `Crea Profesor`.
-4. **Reinicia OpenCode** en ese proyecto: el `AGENTS.md` se aplica a partir de la siguiente sesión.
+   Debe terminar con `Memorias en: Y:\memorias` (en el PC, la ruta de E). Si dice `AVISO`, revisa que `Y:` esté montada y repite la línea.
+5. **En cada proyecto nuevo:** `cd Z:\mi-proyecto; opencode` y escribe `Crea Profesor`.
+6. **Reinicia OpenCode** en ese proyecto: el `AGENTS.md` se aplica a partir de la siguiente sesión.
+7. **Comprueba:** la respuesta empieza con "Miguelito" y `Comandos` muestra la tabla.
 
-Más detalle (VM de VirtualBox, carpetas compartidas, memorias): repo `ayuda-agentes`, archivo `VM-PASOS.md`.
-
+**Luego ve a [`VM-PASOS.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/VM-PASOS.md)** (repo `ayuda-agentes`) si necesitas más detalle de la VM, las carpetas compartidas o las memorias. Todos los comandos disponibles están en [`Comandos.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/Comandos.md).
 ## Camino manual (sin instalador)
 
 1. Crea la carpeta del proyecto y abre OpenCode en ella.
