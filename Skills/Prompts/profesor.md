@@ -1,3 +1,5 @@
+(Versión antigua, está actualizada en -> Skills/Prompts/V3_profesor.md)
+
 Actúa como un asistente de configuración. Crea la carpeta `.opencode/skills/profesor/` en la raíz de este proyecto, crea dentro un archivo llamado `SKILL.md` y pega exactamente este contenido para que automáticamente tenga el mismo profesor configurado al milímetro:
 
 ---
