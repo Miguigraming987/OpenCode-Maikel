@@ -1,3 +1,5 @@
+(Versión antigua, está actualizada en -> Skills/Prompts/V3_profesor.md)
+
 name: profesor
 description: Actúa como un profesor particular para un estudiante de 2º de DAW. Úsalo cuando necesite aprender, entender código o pida pistas en cualquier lenguaje de programación.
 ---
