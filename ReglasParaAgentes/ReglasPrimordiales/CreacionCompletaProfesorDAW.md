@@ -1,30 +1,49 @@
 # Creación completa del Profesor DAW
 
-Pasos exactos para tener el profesor (y las reglas del agente) en cualquier proyecto. Hay un camino rápido y uno manual.
+Guía para montar en cualquier PC con Windows un agente de [OpenCode](https://opencode.ai) con reglas globales y un profesor que da pistas sin regalar la solución. Está pensada para copiarla: los datos propios van entre `<...>` y después de cada paso hay un **Mi ejemplo**.
 
-## Camino rápido (Windows 11, PC o VM de VirtualBox)
+Si trabajas dentro de una VM de VirtualBox, haz estos pasos y consulta también [`VM-PASOS.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/VM-PASOS.md).
 
-0. **Solo en la VM:** comprueba en el Explorador que aparecen `Z:` (proyectos) e `Y:` (agentes y memorias). Si no aparecen, instala las Guest Additions: menú de la VM > Dispositivos > Insertar imagen de CD de las Guest Additions, ejecuta `VBoxWindowsAdditions.exe` y reinicia. En la VM no uses `E:`.
-1. **Instala los programas** (PowerShell, una sola vez):
+## Datos que tienes que decidir
+
+| Dato | Qué es | Mi ejemplo |
+|---|---|---|
+| `<TU_USUARIO>` | Tu usuario de GitHub | `Miguigraming987` |
+| `<TU_EMAIL_NOREPLY>` | Email privado de GitHub (Settings > Emails), formato `<id>+<usuario>@users.noreply.github.com` | `186576905+Miguigraming987@users.noreply.github.com` |
+| `<CANARIO>` | Palabra con la que el agente empieza cada respuesta; si no aparece, sabes que no cargó tus reglas | `Miguelito` |
+| `<REPO>` | Tu copia del repo de ejemplo | `ayuda-agentes` |
+| `<CARPETA_MEMORIAS>` | Carpeta donde se guardan las memorias del agente (debe contener un archivo vacío `.memorias-agente`) | `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias` |
+
+## Camino rápido (con instalador)
+
+1. **Haz tu copia del repo de ejemplo.** Haz fork de `Miguigraming987/ayuda-agentes` en GitHub.
+   *Mi ejemplo:* es el propio repo `Miguigraming987/ayuda-agentes`.
+2. **Personalízala** en tu fork: cambia el canario en `AGENTS.global.md`, y en `instalar.ps1` cambia `$base` (tu usuario y repo) y `$subs` (dónde buscar tu carpeta de memorias). Crea el archivo marcador `.memorias-agente` dentro de `<CARPETA_MEMORIAS>`.
+   *Mi ejemplo:* canario `Miguelito`, `$base` apunta a `Miguigraming987/ayuda-agentes`, memorias en `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias`.
+3. **Instala los programas** (PowerShell, una sola vez) y reabre PowerShell:
    ```powershell
    winget install OpenJS.NodeJS.LTS; winget install Git.Git; winget install GitHub.cli
    ```
-   Cierra y abre PowerShell.
-2. **Instala OpenCode y vincula GitHub** (`gh auth login` es interactivo):
+   *Mi ejemplo:* igual.
+4. **Instala OpenCode y vincula GitHub** (`gh auth login` es interactivo):
    ```powershell
-   npm install -g @opencode/cli; gh auth login; git config --global user.name "Miguigraming987"; git config --global user.email "186576905+Miguigraming987@users.noreply.github.com"
+   npm install -g @opencode/cli; gh auth login; git config --global user.name "<TU_USUARIO>"; git config --global user.email "<TU_EMAIL_NOREPLY>"
    ```
-3. Escribe `opencode` y, dentro, `/connect` para conectar tu proveedor de IA.
-4. **Instala mis reglas y el profesor** (una sola vez por PC o VM):
+   *Mi ejemplo:* `git config --global user.name "Miguigraming987"` y el email `186576905+Miguigraming987@users.noreply.github.com`.
+5. **Conecta tu proveedor de IA:** escribe `opencode` y, dentro, `/connect`.
+   *Mi ejemplo:* igual.
+6. **Instala tus reglas y el profesor** (una vez por PC o VM):
    ```powershell
-   irm https://raw.githubusercontent.com/Miguigraming987/ayuda-agentes/main/instalar.ps1 | iex
+   irm https://raw.githubusercontent.com/<TU_USUARIO>/<REPO>/main/instalar.ps1 | iex
    ```
-   Debe terminar con `Memorias en: Y:\memorias` (en el PC, la ruta de E). Si dice `AVISO`, revisa que `Y:` esté montada y repite la línea.
-5. **En cada proyecto nuevo:** `cd Z:\mi-proyecto; opencode` y escribe `Crea Profesor`.
-6. **Reinicia OpenCode** en ese proyecto: el `AGENTS.md` se aplica a partir de la siguiente sesión.
-7. **Comprueba:** la respuesta empieza con "Miguelito" y `Comandos` muestra la tabla.
+   Debe terminar con `Memorias en: <CARPETA_MEMORIAS>`. Si dice `AVISO`, la carpeta de memorias no se encontró: revisa el marcador y repite.
+   *Mi ejemplo:* `irm https://raw.githubusercontent.com/Miguigraming987/ayuda-agentes/main/instalar.ps1 | iex`
+7. **En cada proyecto nuevo:** abre OpenCode en su carpeta y escribe `Crea Profesor`. Después reinicia OpenCode: el `AGENTS.md` se aplica a partir de la siguiente sesión.
+   *Mi ejemplo:* en la VM, `cd Z:\mi-proyecto; opencode`.
+8. **Comprueba:** la respuesta empieza con `<CANARIO>` y `Comandos` muestra la tabla de palabras clave.
+   *Mi ejemplo:* la respuesta empieza con "Miguelito".
 
-**Luego ve a [`VM-PASOS.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/VM-PASOS.md)** (repo `ayuda-agentes`) si necesitas más detalle de la VM, las carpetas compartidas o las memorias. Todos los comandos disponibles están en [`Comandos.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/Comandos.md).
+Los comandos disponibles están en [`Comandos.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/Comandos.md).
 
 ## Camino manual (sin instalador)
 
@@ -37,7 +56,7 @@ Crea en la carpeta actual estos 4 archivos. Antes de crear cada uno, comprueba s
 1) AGENTS.md con este contenido:
 # Reglas para agentes
 ## Formato de respuesta
-- Todas las respuestas de cualquier modelo deben comenzar obligatoriamente con la palabra **Miguelito**.
+- Todas las respuestas de cualquier modelo deben comenzar obligatoriamente con la palabra **<CANARIO>**.
 ## Memoria entre sesiones
 - Al empezar cada sesión, lee `CONTEXTO.md` (si existe) antes de responder a la primera petición.
 - Al terminar una tarea o cuando el usuario se despida, actualiza `CONTEXTO.md` con: qué se hizo, qué queda pendiente, decisiones tomadas y dudas abiertas.
@@ -48,21 +67,21 @@ Crea en la carpeta actual estos 4 archivos. Antes de crear cada uno, comprueba s
 
 3) PISTAS.md con el título "# 🧑‍🏫 Pistas" y una nota: "Aquí aparecerán las pistas cuando escribas 'Dame una pista' o 'Tengo una duda'."
 
-4) .opencode/skills/profesor/SKILL.md: descarga https://raw.githubusercontent.com/Miguigraming987/OpenCode-Maikel/main/Skills/Prompts/V3_profesor.md y guárdalo con una primera línea `---` seguida EXACTAMENTE de ese contenido (respeta tildes, emojis y formato).
+4) .opencode/skills/profesor/SKILL.md: descarga https://raw.githubusercontent.com/<TU_USUARIO>/<REPO>/main/skills/profesor/SKILL.md y guárdalo EXACTAMENTE con ese contenido (respeta tildes, emojis y formato).
 
-Al terminar, lista los archivos creados. Empieza tu respuesta con la palabra "Miguelito".
+Al terminar, lista los archivos creados. Empieza tu respuesta con la palabra "<CANARIO>".
 ````
 
-3. Reinicia OpenCode en el proyecto.
-4. Comprueba: la respuesta empieza con "Miguelito" y `Dame una pista` activa al profesor.
+   *Mi ejemplo:* `<CANARIO>` = `Miguelito` y la URL de la skill es `https://raw.githubusercontent.com/Miguigraming987/ayuda-agentes/main/skills/profesor/SKILL.md`.
+3. Reinicia OpenCode en el proyecto y comprueba que la respuesta empieza con `<CANARIO>`.
 
-Si el agente no puede descargar la skill, copia a mano el contenido de `Skills/Prompts/V3_profesor.md` (añadiendo `---` como primera línea) en `.opencode/skills/profesor/SKILL.md`.
+Si el agente no puede descargar la skill, copia a mano el contenido de `skills/profesor/SKILL.md` en `.opencode/skills/profesor/SKILL.md`.
 
 ## Qué se crea
 
 | Archivo | Para qué sirve |
 |---|---|
-| `AGENTS.md` | Reglas del agente: responder con "Miguelito" y leer/actualizar `CONTEXTO.md`. |
+| `AGENTS.md` | Reglas del agente: responder con el canario y leer/actualizar `CONTEXTO.md`. |
 | `CONTEXTO.md` | Estado del proyecto entre sesiones. |
 | `PISTAS.md` | Donde el profesor escribe las pistas. |
 | `.opencode/skills/profesor/SKILL.md` | La skill del profesor. |
@@ -74,7 +93,3 @@ Si el agente no puede descargar la skill, copia a mano el contenido de `Skills/P
 | `Dame una pista` / `Tengo una duda` | 3 pistas incrementales de un archivo en `PISTAS.md`. |
 | `Como sigo?` / `Estoy atascado` | Solo el siguiente paso exacto. |
 | `Dame la solucion` / `Solucion` | Solución completa con explicación. |
-
-## Versiones de la skill
-
-La más reciente es `Skills/Prompts/V3_profesor.md`. Si cambias la skill, súbela como versión nueva y actualiza la URL del paso 4 del prompt manual.
