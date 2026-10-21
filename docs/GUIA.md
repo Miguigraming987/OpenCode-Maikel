@@ -1,8 +1,8 @@
-# Creación completa del Profesor DAW
+# Guía: crear el Profesor DAW paso a paso
 
 Guía para montar en cualquier PC con Windows un agente de [OpenCode](https://opencode.ai) con reglas globales y un profesor que da pistas sin regalar la solución. Está pensada para copiarla: los datos propios van entre `<...>` y después de cada paso hay un **Mi ejemplo**.
 
-Si trabajas dentro de una VM de VirtualBox, haz estos pasos y consulta también [`VM-PASOS.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/VM-PASOS.md).
+Si trabajas dentro de una VM de VirtualBox, haz estos pasos y consulta también [`VM-PASOS.md`](VM-PASOS.md).
 
 ## Datos que tienes que decidir
 
@@ -11,15 +11,15 @@ Si trabajas dentro de una VM de VirtualBox, haz estos pasos y consulta también 
 | `<TU_USUARIO>` | Tu usuario de GitHub | `Miguigraming987` |
 | `<TU_EMAIL_NOREPLY>` | Email privado de GitHub (Settings > Emails), formato `<id>+<usuario>@users.noreply.github.com` | `186576905+Miguigraming987@users.noreply.github.com` |
 | `<CANARIO>` | Palabra con la que el agente empieza cada respuesta; si no aparece, sabes que no cargó tus reglas | `Miguelito` |
-| `<REPO>` | Tu copia del repo de ejemplo | `ayuda-agentes` |
+| `<REPO>` | Tu copia de este repo | `OpenCode-Maikel` |
 | `<CARPETA_MEMORIAS>` | Carpeta donde se guardan las memorias del agente (debe contener un archivo vacío `.memorias-agente`) | `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias` |
 
 ## Camino rápido (con instalador)
 
-1. **Haz tu copia del repo de ejemplo.** Haz fork de `Miguigraming987/ayuda-agentes` en GitHub.
-   *Mi ejemplo:* es el propio repo `Miguigraming987/ayuda-agentes`.
-2. **Personalízala** en tu fork: cambia el canario en `AGENTS.global.md`, y en `instalar.ps1` cambia `$base` (tu usuario y repo) y `$subs` (dónde buscar tu carpeta de memorias). Crea el archivo marcador `.memorias-agente` dentro de `<CARPETA_MEMORIAS>`.
-   *Mi ejemplo:* canario `Miguelito`, `$base` apunta a `Miguigraming987/ayuda-agentes`, memorias en `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias`.
+1. **Haz tu copia de este repo.** Haz fork de `Miguigraming987/OpenCode-Maikel` en GitHub.
+   *Mi ejemplo:* es el propio repo `Miguigraming987/OpenCode-Maikel`.
+2. **Personalízala** en tu fork: cambia el canario en `config/AGENTS.global.md`, y en `instalar.ps1` cambia `$base` (tu usuario y repo) y `$subs` (dónde buscar tu carpeta de memorias). Crea el archivo marcador `.memorias-agente` dentro de `<CARPETA_MEMORIAS>`.
+   *Mi ejemplo:* canario `Miguelito`, `$base` apunta a `Miguigraming987/OpenCode-Maikel`, memorias en `E:\3. HERRAMIENTAS Y RECURSOS\13. AgentesIA\memorias`.
 3. **Instala los programas** (PowerShell, una sola vez) y reabre PowerShell:
    ```powershell
    winget install OpenJS.NodeJS.LTS; winget install Git.Git; winget install GitHub.cli
@@ -27,7 +27,7 @@ Si trabajas dentro de una VM de VirtualBox, haz estos pasos y consulta también 
    *Mi ejemplo:* igual.
 4. **Instala OpenCode y vincula GitHub** (`gh auth login` es interactivo):
    ```powershell
-   npm install -g @opencode/cli; gh auth login; git config --global user.name "<TU_USUARIO>"; git config --global user.email "<TU_EMAIL_NOREPLY>"
+   npm install -g opencode-ai; gh auth login; git config --global user.name "<TU_USUARIO>"; git config --global user.email "<TU_EMAIL_NOREPLY>"
    ```
    *Mi ejemplo:* `git config --global user.name "Miguigraming987"` y el email `186576905+Miguigraming987@users.noreply.github.com`.
 5. **Conecta tu proveedor de IA:** escribe `opencode` y, dentro, `/connect`.
@@ -37,13 +37,13 @@ Si trabajas dentro de una VM de VirtualBox, haz estos pasos y consulta también 
    irm https://raw.githubusercontent.com/<TU_USUARIO>/<REPO>/main/instalar.ps1 | iex
    ```
    Debe terminar con `Memorias en: <CARPETA_MEMORIAS>`. Si dice `AVISO`, la carpeta de memorias no se encontró: revisa el marcador y repite.
-   *Mi ejemplo:* `irm https://raw.githubusercontent.com/Miguigraming987/ayuda-agentes/main/instalar.ps1 | iex`
+   *Mi ejemplo:* `irm https://raw.githubusercontent.com/Miguigraming987/OpenCode-Maikel/main/instalar.ps1 | iex`
 7. **En cada proyecto nuevo:** abre OpenCode en su carpeta y escribe `Crea Profesor`. Después reinicia OpenCode: el `AGENTS.md` se aplica a partir de la siguiente sesión.
    *Mi ejemplo:* en la VM, `cd Z:\mi-proyecto; opencode`.
 8. **Comprueba:** la respuesta empieza con `<CANARIO>` y `Comandos` muestra la tabla de palabras clave.
    *Mi ejemplo:* la respuesta empieza con "Miguelito".
 
-Los comandos disponibles están en [`Comandos.md`](https://github.com/Miguigraming987/ayuda-agentes/blob/main/Comandos.md).
+Los comandos disponibles están en [`COMANDOS.md`](COMANDOS.md).
 
 ## Camino manual (sin instalador)
 
@@ -72,7 +72,7 @@ Crea en la carpeta actual estos 4 archivos. Antes de crear cada uno, comprueba s
 Al terminar, lista los archivos creados. Empieza tu respuesta con la palabra "<CANARIO>".
 ````
 
-   *Mi ejemplo:* `<CANARIO>` = `Miguelito` y la URL de la skill es `https://raw.githubusercontent.com/Miguigraming987/ayuda-agentes/main/skills/profesor/SKILL.md`.
+   *Mi ejemplo:* `<CANARIO>` = `Miguelito` y la URL de la skill es `https://raw.githubusercontent.com/Miguigraming987/OpenCode-Maikel/main/skills/profesor/SKILL.md`.
 3. Reinicia OpenCode en el proyecto y comprueba que la respuesta empieza con `<CANARIO>`.
 
 Si el agente no puede descargar la skill, copia a mano el contenido de `skills/profesor/SKILL.md` en `.opencode/skills/profesor/SKILL.md`.
@@ -85,11 +85,3 @@ Si el agente no puede descargar la skill, copia a mano el contenido de `skills/p
 | `CONTEXTO.md` | Estado del proyecto entre sesiones. |
 | `PISTAS.md` | Donde el profesor escribe las pistas. |
 | `.opencode/skills/profesor/SKILL.md` | La skill del profesor. |
-
-## Palabras clave del profesor
-
-| Di exactamente | Para qué sirve |
-|---|---|
-| `Dame una pista` / `Tengo una duda` | 3 pistas incrementales de un archivo en `PISTAS.md`. |
-| `Como sigo?` / `Estoy atascado` | Solo el siguiente paso exacto. |
-| `Dame la solucion` / `Solucion` | Solución completa con explicación. |
