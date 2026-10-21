@@ -10,6 +10,7 @@
 - **Contexto** (`CONTEXTO.md`): estado de un proyecto concreto. Vive dentro de cada proyecto y se lee solo al empezar.
 - **Memoria** (`memoria<N>.md`): resumen de la configuración y de lo hablado con el agente. Vive en la carpeta de memorias y se guarda solo con `Guarda memoria`.
 - Al empezar cada sesión, lee `CONTEXTO.md` (si existe en la carpeta de trabajo) antes de responder a la primera petición.
+- Al empezar cada sesión, lee también la memoria más reciente (el `memoria<N>.md` con la N mayor) de `{{MEMORIAS}}`, si esa carpeta existe y contiene `.memorias-agente`, para retomar lo ya hablado. No repitas su contenido: solo di en una línea cuál has leído.
 - Al terminar una tarea o cuando el usuario se despida, actualiza `CONTEXTO.md` (si existe) con:
   - Qué se hizo.
   - Qué queda pendiente.
@@ -21,7 +22,7 @@
 | Di exactamente | Para qué sirve |
 |---|---|
 | `Crea Profesor` o `Crear Profesor` | Crea en la carpeta actual `AGENTS.md`, `CONTEXTO.md`, `PISTAS.md` y la skill `profesor`. |
-| `Guarda memoria` o `Guardar memoria` | Crea un archivo nuevo `memoria<N>.md` en la carpeta de memorias. |
+| `Guarda memoria` o `Guardar memoria` | Crea un archivo nuevo `memoria<N>.md` en la carpeta de memorias y, si está en un repo git, lo sube. |
 | `Comandos`, `Ayuda` o `Lista de comandos` | Muestra esta tabla. |
 | `Dame una pista` o `Tengo una duda` | (Profesor) 3 pistas incrementales de un archivo en `PISTAS.md`. |
 | `Como sigo?` o `Estoy atascado` | (Profesor) Te da solo el siguiente paso exacto. |
@@ -42,4 +43,5 @@
   1. Guarda en `{{MEMORIAS}}`. Antes de guardar, comprueba que esa carpeta contiene el archivo marcador `.memorias-agente` (así te aseguras de que no es otro disco con la misma letra). Si la ruta es `NO_ENCONTRADA` o no tiene el marcador, NO guardes: pregunta al usuario la ruta de la carpeta `memorias` (debe contener `.memorias-agente`) y recuérdale que repita la línea de instalación para que quede fijada.
   2. Lista los archivos `memoria<N>.md` que ya haya y crea uno nuevo con el número siguiente (`memoria1.md` si no hay ninguno). Nunca sobrescribas uno existente.
   3. Contenido breve del archivo: título `# Memoria <N> - <tema o carpeta de trabajo>`, y las secciones Estado actual, Hecho, Pendiente, Decisiones y dudas, y Última actualización (fecha).
-  4. Al terminar, di la ruta del archivo creado. Este archivo no sustituye al `CONTEXTO.md` del proyecto.
+  4. Si `{{MEMORIAS}}` está dentro de un repositorio git con remoto, súbela: `git -C "{{MEMORIAS}}" add -A`, `commit -m "memoria<N>"` y `push`. Si falla (por ejemplo, sin sesión de GitHub), dilo y no reintentes.
+  5. Al terminar, di la ruta del archivo creado y si se subió a GitHub. Este archivo no sustituye al `CONTEXTO.md` del proyecto.
