@@ -27,8 +27,9 @@ Si trabajas dentro de una VM de VirtualBox, haz estos pasos y consulta también 
    *Mi ejemplo:* igual.
 4. **Instala OpenCode y vincula GitHub** (`gh auth login` es interactivo):
    ```powershell
-   npm install -g opencode-ai; gh auth login; git config --global user.name "<TU_USUARIO>"; git config --global user.email "<TU_EMAIL_NOREPLY>"
+   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force; npm install -g opencode-ai; gh auth login; git config --global user.name "<TU_USUARIO>"; git config --global user.email "<TU_EMAIL_NOREPLY>"
    ```
+   El primer comando permite ejecutar scripts solo a tu usuario. Sin él, Windows 11 bloquea `opencode` con el error "la ejecución de scripts está deshabilitada".
    *Mi ejemplo:* `git config --global user.name "Miguigraming987"` y el email `186576905+Miguigraming987@users.noreply.github.com`.
 5. **Conecta tu proveedor de IA:** escribe `opencode` y, dentro, `/connect`.
    *Mi ejemplo:* igual.
